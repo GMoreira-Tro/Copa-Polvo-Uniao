@@ -21,10 +21,8 @@ namespace CRUDAPI
             services.AddDbContext<Contexto>(opcoes => opcoes.UseSqlServer(connectionString));
 
             services.AddHttpClient();
-            services.AddScoped<GeoNamesService>();
             services.AddScoped<UsuarioService>();
             services.AddScoped<InscricaoService>();
-            services.AddScoped<CompeticaoService>();
             services.AddScoped<CategoriaService>();
 
             services.AddCors(options =>

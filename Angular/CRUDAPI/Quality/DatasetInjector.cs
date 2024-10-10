@@ -20,8 +20,9 @@ namespace CRUDAPI.Services
         {
             // Carregar dados dos arquivos JSON
             var usuariosJson = await File.ReadAllTextAsync("mock-usuarios.json");
-            var competicoesJson = await File.ReadAllTextAsync("mock-competicoes.json");
+            var modalidadesJson = await File.ReadAllTextAsync("mock-modalidades.json");
             var categoriasJson = await File.ReadAllTextAsync("mock-categorias.json");
+            var timesJson = await File.ReadAllTextAsync("mock-times.json");
             var inscricoesJson = await File.ReadAllTextAsync("mock-inscricoes.json");
             var confrontosJson = await File.ReadAllTextAsync("mock-confrontos.json");
             var confrontoInscricoesJson = await File.ReadAllTextAsync("mock-confrontoInscricoes.json");
@@ -29,8 +30,9 @@ namespace CRUDAPI.Services
 
             // Converter JSON para objetos C#
             var usuarios = JsonConvert.DeserializeObject<Usuario[]>(usuariosJson);
-            var competicoes = JsonConvert.DeserializeObject<Competicao[]>(competicoesJson);
             var categorias = JsonConvert.DeserializeObject<Categoria[]>(categoriasJson);
+            var modalidades = JsonConvert.DeserializeObject<Modalidade[]>(modalidadesJson);
+            var times = JsonConvert.DeserializeObject<Time[]>(timesJson);
             var inscricoes = JsonConvert.DeserializeObject<Inscricao[]>(inscricoesJson);
             var confrontos = JsonConvert.DeserializeObject<Confronto[]>(confrontosJson);
             var confrontoInscricoes = JsonConvert.DeserializeObject<ConfrontoInscricao[]>(confrontoInscricoesJson);
@@ -46,12 +48,12 @@ namespace CRUDAPI.Services
                 }
             }
 
-            foreach (var competicao in competicoes)
+            foreach (var modalidade in modalidades)
             {
-                var response = await _httpClient.PostAsJsonAsync("api/competicao", competicao);
+                var response = await _httpClient.PostAsJsonAsync("api/modalidade", modalidade);
                 if (!response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine($"Erro ao criar competição: {response.ReasonPhrase}");
+                    Console.WriteLine($"Erro ao criar modalidade: {response.ReasonPhrase}");
                 }
             }
 
@@ -61,6 +63,15 @@ namespace CRUDAPI.Services
                 if (!response.IsSuccessStatusCode)
                 {
                     Console.WriteLine($"Erro ao criar categoria: {response.ReasonPhrase}");
+                }
+            }
+
+            foreach (var time in times)
+            {
+                var response = await _httpClient.PostAsJsonAsync("api/time", time);
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"Erro ao criar time: {response.ReasonPhrase}");
                 }
             }
 

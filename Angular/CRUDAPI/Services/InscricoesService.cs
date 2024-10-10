@@ -16,19 +16,6 @@ namespace CRUDAPI.Services
                 throw new CampoObrigatorioException("Categoria");
             }
 
-            if (inscricao.UsuarioId <= 0)
-            {
-                throw new CampoObrigatorioException("Usuário");
-            }
-
-            inscricao.Usuario = await _contexto.FindAsync<Usuario>(inscricao.UsuarioId);
-
-            var competidor = await _contexto.Competidores.FindAsync(inscricao.CompetidorId);
-            if (competidor == null)
-            {
-                throw new KeyNotFoundException($"Competidor com ID {inscricao.CompetidorId} não encontrado.");
-            }
-
             inscricao.ConfrontoInscricoes ??= [];
             return inscricao;
         }

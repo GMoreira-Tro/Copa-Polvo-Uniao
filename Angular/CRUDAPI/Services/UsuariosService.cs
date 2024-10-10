@@ -13,7 +13,6 @@ namespace CRUDAPI.Services
     public partial class UsuarioService
     {
         private readonly Contexto _contexto;
-        private const string GeoNamesBaseUrl = "http://api.geonames.org";
 
         public UsuarioService(Contexto contexto)
         {

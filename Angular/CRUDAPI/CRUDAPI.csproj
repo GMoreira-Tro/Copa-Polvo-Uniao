@@ -7,6 +7,11 @@
     <InvariantGlobalization>false</InvariantGlobalization>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <NoWarn>CS0168;CS0219</NoWarn>
+  </PropertyGroup>
+
+
   <ItemGroup>
     <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
     <PackageReference Include="CpfCnpj" Version="2.0.5" />

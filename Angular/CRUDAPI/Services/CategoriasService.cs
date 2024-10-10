@@ -21,11 +21,6 @@ namespace CRUDAPI.Services
                 throw new CampoObrigatorioException("O nome da categoria é obrigatório.");
             }
 
-            if (categoria.CompeticaoId <= 0)
-            {
-                throw new CampoObrigatorioException("O ID da competição é obrigatório.");
-            }
-
             return categoria;
         }
 
