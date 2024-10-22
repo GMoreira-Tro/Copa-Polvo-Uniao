@@ -20,6 +20,11 @@ public class CampoObrigatorioException : Exception
     public CampoObrigatorioException(string campo) : base($"O campo '{campo}' é obrigatório.") { }
 }
 
+public class SaldoNegativoException : Exception
+{
+    public SaldoNegativoException() : base($"O saldo não pode ser negativo.") { }
+}
+
 public class StatusInscricaoInvalidoException : Exception
 {
     public StatusInscricaoInvalidoException() 
