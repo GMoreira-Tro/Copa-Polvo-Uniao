@@ -31,8 +31,31 @@ namespace CRUDAPI.Models
         /// <param name="modelBuilder">Construtor do modelo de relacionamento entre tabelas.</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configuração das chaves estrangeiras e índices únicos
+             // Relacionamento 1: Pagamento -> PagamentoContasCorrente
+            modelBuilder.Entity<Pagamento>()
+                .HasMany(p => p.PagamentoContasCorrente)
+                .WithOne(pcc => pcc.Pagamento)
+                .HasForeignKey(pcc => pcc.PagamentoId) // Definindo a FK explicitamente
+                .OnDelete(DeleteBehavior.Restrict);    // Ajustando o comportamento da exclusão
 
+            // Relacionamento 2: PagamentoContaCorrente -> Pagamento
+            modelBuilder.Entity<PagamentoContaCorrente>()
+                .HasOne(pcc => pcc.Pagamento)
+                .WithMany(p => p.PagamentoContasCorrente)
+                .HasForeignKey(pcc => pcc.PagamentoId) // Definindo a FK explicitamente
+                .OnDelete(DeleteBehavior.Restrict);    // Ajustando o comportamento da exclusão
+
+             modelBuilder.Entity<Usuario>()
+                .HasMany(u => u.UsuarioNotificacaos)
+                .WithOne(un => un.Usuario)
+                .HasForeignKey(un => un.UsuarioId) // Definindo a FK explicitamente
+                .OnDelete(DeleteBehavior.Restrict);    // Ajustando o comportamento da exclusão
+                // Configuração de chave estrangeira entre UsuarioNotificacoes e Usuarios
+            modelBuilder.Entity<UsuarioNotificacao>()
+                .HasOne(un => un.Usuario)
+                .WithMany(u => u.UsuarioNotificacaos)
+                .HasForeignKey(un => un.UsuarioId)
+                .OnDelete(DeleteBehavior.Restrict); // Impede exclusão em cascata
         }
 
         // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -3,15 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CRUDAPI.Models
 {
-    public struct Atleta {
-        public string nome;
-        public string cpf;
-
-        public Atleta(string nome, string cpf)
-        {
-            this.nome = nome;
-            this.cpf = cpf;
-        }
+    [Table("Atletas")]
+    public class Atleta {
+        [Key]
+        public long Id { get; set; }
+        [Required]
+        public string Nome { get; set; } = "";
+        [Required]
+        public string Cpf { get; set; } = "";
     }
     /// <summary>
     /// Times inscritos na Copa.

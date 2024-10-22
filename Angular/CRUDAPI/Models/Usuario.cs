@@ -45,5 +45,7 @@ namespace CRUDAPI.Models
         /// </summary>
         [EnumDataType(typeof(Role))]
         public Role Role { get; set; }
+
+        public virtual ICollection<UsuarioNotificacao> UsuarioNotificacaos { get; set; } = new List<UsuarioNotificacao>();
     }
 }
