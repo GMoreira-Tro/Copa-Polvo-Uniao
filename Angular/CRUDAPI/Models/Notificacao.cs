@@ -21,7 +21,7 @@ namespace CRUDAPI.Models
         /// <summary>
         /// Pagamento necessário para criar esta Notificação.
         /// </summary>
-        public Pagamento Pagamento { get; set; }
+        public virtual Pagamento? Pagamento { get; set; }
 
         [Required]
         public string Titulo { get; set; } = "";
