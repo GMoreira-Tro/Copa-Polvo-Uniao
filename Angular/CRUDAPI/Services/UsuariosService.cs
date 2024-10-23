@@ -68,19 +68,12 @@ namespace CRUDAPI.Services
             }
 
             // Valida o CPF/CNPJ
-            if (!ValidarCPF(usuario.Cpf))
+            if (!Validators.ValidarCPF(usuario.Cpf))
             {
                 throw new CpfInvalidoException(); // Indica que o CPF/CNPJ é inválido
             }
 
             return usuario;
-        }
-
-        // Função para validar CPF ou CNPJ
-        public bool ValidarCPF(string documento)
-        {
-            CPFCNPJ.Main main = new();
-            return main.IsValidCPFCNPJ(documento);
         }
 
         public bool UsuarioExists(long id)

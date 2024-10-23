@@ -32,4 +32,10 @@ public static partial class Validators
 
     [GeneratedRegex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%&*!?\-_()])[A-Za-z\d@#$%&*!?\-_()]+$")]
     private static partial Regex SenhaRegex();
+
+    public static bool ValidarCPF(string documento)
+    {
+        CPFCNPJ.Main main = new();
+        return main.IsValidCPFCNPJ(documento);
+    }
 }
