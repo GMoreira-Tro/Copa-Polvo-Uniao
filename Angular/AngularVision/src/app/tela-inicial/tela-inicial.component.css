@@ -3,10 +3,21 @@ body {
     margin: 0;
     padding: 0;
 }
-
 .banner {
-    text-align: center;
-    padding: 50px 0;
+    background-image: url('../assets/images/Emblema.webp'); /* Certifique-se de que o caminho da imagem esteja correto */
+    background-size: contain; /* Redimensiona a imagem para caber completamente dentro do container */
+    background-position: center; /* Centraliza a imagem no espaço disponível */
+    background-repeat: no-repeat; /* Evita que a imagem se repita */
+    height: 500px; /* Define a altura do banner para 500px */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner h1 {
+    color: white;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .destaque {
