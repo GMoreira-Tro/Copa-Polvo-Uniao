@@ -31,13 +31,24 @@ namespace CRUDAPI.Services
             }
 
             // Verifica se já existem duas inscrições associadas ao confronto
-            var totalInscricoesNoConfronto = await _contexto.ConfrontoInscricoes
+            var inscricoesNoConfronto = await _contexto.ConfrontoInscricoes
                 .Where(ci => ci.ConfrontoId == confrontoInscricao.ConfrontoId)
-                .CountAsync();
+                .Select(ci => ci.InscricaoId)
+                .ToListAsync();
 
-            if (totalInscricoesNoConfronto >= 2)
+            if (inscricoesNoConfronto.Count >= 2)
             {
                 throw new InvalidOperationException($"O Confronto de Inscrições com ID {confrontoInscricao.ConfrontoId} já possui 2 inscrições.");
+            }
+
+            // Se já houver uma inscrição associada ao confronto, verifica se as categorias são iguais
+            if (inscricoesNoConfronto.Count == 1)
+            {
+                var outraInscricao = await _contexto.Inscricoes.FindAsync(inscricoesNoConfronto.First());
+                if (outraInscricao?.CategoriaId != inscricao.CategoriaId)
+                {
+                    throw new InvalidOperationException("As duas inscrições associadas ao confronto devem pertencer à mesma categoria.");
+                }
             }
 
             return confrontoInscricao;

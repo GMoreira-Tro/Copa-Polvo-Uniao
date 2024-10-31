@@ -57,6 +57,13 @@ namespace CRUDAPI.Models
                 .WithMany(u => u.UsuarioNotificacaos)
                 .HasForeignKey(un => un.UsuarioId)
                 .OnDelete(DeleteBehavior.Restrict); // Impede exclusão em cascata
+
+            modelBuilder.Entity<ContaCorrente>(entity =>
+                {
+                    // Especifica precisão e escala para a coluna Saldo
+                    entity.Property(c => c.Saldo)
+                        .HasPrecision(18, 2); // 18 dígitos no total, 2 casas decimais
+                });
         }
 
         // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
