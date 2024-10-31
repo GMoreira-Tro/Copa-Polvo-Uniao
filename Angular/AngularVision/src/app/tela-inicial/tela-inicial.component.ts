@@ -7,32 +7,34 @@ import { Router } from '@angular/router';
   styleUrls: ['./tela-inicial.component.css']
 })
 export class TelaInicialComponent implements OnInit {
+  currentSlide: number = 0;
+  slides: string[] = [
+    '../assets/images/Emblema.webp',
+    '../assets/images/Emblema.webp',
+    '../assets/images/Emblema.webp'
+  ];
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    this.showSlide(this.currentSlide);
+  }
 
-    let currentSlide = 0;
+  showSlide(index: number): void {
+    const slides = document.querySelectorAll('.banner');
+    if (index >= slides.length) this.currentSlide = 0;
+    if (index < 0) this.currentSlide = slides.length - 1;
 
-    function showSlide(index: number) {
-        const slides = document.querySelectorAll('.banner');
-        if (index >= slides.length) currentSlide = 0;
-        if (index < 0) currentSlide = slides.length - 1;
+    slides.forEach((slide, i) => {
+      slide.classList.remove('active');
+      if (i === this.currentSlide) {
+        slide.classList.add('active');
+      }
+    });
+  }
 
-        slides.forEach((slide, i) => {
-            slide.classList.remove('active');
-            if (i === currentSlide) {
-                slide.classList.add('active');
-            }
-        });
-    }
-
-    function moveSlide(direction: number) {
-        currentSlide += direction;
-        showSlide(currentSlide);
-    }
-
-    // Iniciar o carrossel mostrando o primeiro banner
-    showSlide(currentSlide);
+  moveSlide(direction: number): void {
+    this.currentSlide += direction;
+    this.showSlide(this.currentSlide);
   }
 }

@@ -37,7 +37,7 @@ namespace CRUDAPI.Services
 
             if (totalInscricoesNoConfronto >= 2)
             {
-                throw new InvalidOperationException($"O Confronto com ID {confrontoInscricao.ConfrontoId} já possui 2 inscrições.");
+                throw new InvalidOperationException($"O Confronto de Inscrições com ID {confrontoInscricao.ConfrontoId} já possui 2 inscrições.");
             }
 
             return confrontoInscricao;

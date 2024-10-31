@@ -14,9 +14,9 @@ namespace CRUDAPI.Models
         public long Id { get; set; }
 
         [Required]
-        public string Nome { get; set; }
+        public string Nome { get; set; } = "";
 
-        public string Descricao { get; set; }
+        public string? Descricao { get; set; }
 
         public DateTime DataEntrega { get; set; }
 

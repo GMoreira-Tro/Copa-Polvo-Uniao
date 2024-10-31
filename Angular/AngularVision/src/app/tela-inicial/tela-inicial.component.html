@@ -10,10 +10,17 @@
 <body>
     <app-cabecalho></app-cabecalho>
     <!-- Banner do projeto -->
-    <div class="banner">
-        <!-- Banner grande centralizado -->
-        <h1>Banner do Projeto</h1>
-    </div>
+    <div class="carousel">
+        <button class="prev" (click)="moveSlide(-1)">&#10094;</button>
+        
+        <div class="banner" *ngFor="let slide of slides; let i = index" 
+             [ngClass]="{'active': currentSlide === i}" 
+             [style.backgroundImage]="'url(' + slide.image + ')'">
+            <h1 *ngIf="currentSlide === i">{{ slide.text }}</h1>
+        </div>
+        
+        <button class="next" (click)="moveSlide(1)">&#10095;</button>
+    </div>       
 
     <div class="conteudo">
         <h2 class="destaque">Competições em destaque</h2>

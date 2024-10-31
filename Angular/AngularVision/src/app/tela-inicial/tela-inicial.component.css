@@ -3,21 +3,57 @@ body {
     margin: 0;
     padding: 0;
 }
+.carousel {
+    position: relative;
+    width: 100%;
+    max-width: 800px; /* Ajuste conforme necessário */
+    overflow: hidden;
+}
+
 .banner {
-    background-image: url('../assets/images/Emblema.webp'); /* Certifique-se de que o caminho da imagem esteja correto */
-    background-size: contain; /* Redimensiona a imagem para caber completamente dentro do container */
-    background-position: center; /* Centraliza a imagem no espaço disponível */
-    background-repeat: no-repeat; /* Evita que a imagem se repita */
-    height: 500px; /* Define a altura do banner para 500px */
+    background-size: cover; /* Cobrir a imagem */
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: absolute; /* Permite sobreposição das imagens */
+    width: 100%;
+    opacity: 0; /* Esconde todos os banners inicialmente */
+    transition: opacity 0.5s ease-in-out; /* Efeito de transição na opacidade */
 }
 
-.banner h1 {
+.banner.active {
+    opacity: 1; /* Mostrar apenas o banner ativo */
+}
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    z-index: 1000;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+h1 {
     color: white;
     font-size: 2.5rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    position: absolute; /* Para centralizar o texto sobre a imagem */
+    text-align: center; /* Centraliza o texto */
+    width: 100%; /* Garante que o texto esteja centralizado na largura total */
 }
 
 .destaque {
