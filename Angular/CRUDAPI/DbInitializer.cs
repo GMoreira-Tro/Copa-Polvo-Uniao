@@ -300,7 +300,7 @@ namespace CRUDAPI {
                 {
                     CategoriaId = primeiraCategoria.Id,       // Categoria escolhida
                     TimeId = time.Id,                         // Time a ser inscrito
-                    PagamentoContaCorrenteId = pagamentoContaCorrente != null ? pagamentoContaCorrente.Id : 0,
+                    PagamentoContaCorrenteId = pagamentoContaCorrente.Id,
                     Posição = null,                           // Posição ainda não determinada
                     WO = false,                               // Indica que não houve WO
                     PremioResgatavelId = null  
