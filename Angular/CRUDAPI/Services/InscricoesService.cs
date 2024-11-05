@@ -20,11 +20,11 @@ namespace CRUDAPI.Services
 
             // Verifica se o PagamentoId já está associado a outra inscrição
             var pagamentoExistente = await _contexto.Inscricoes
-                .AnyAsync(i => i.PagamentoId == inscricao.PagamentoId && i.Id != inscricao.Id);
+                .AnyAsync(i => i.PagamentoContaCorrenteId == inscricao.PagamentoContaCorrenteId && i.Id != inscricao.Id);
 
             if (pagamentoExistente)
             {
-                throw new InvalidOperationException($"O Pagamento com ID {inscricao.PagamentoId} já está associado a outra Inscrição.");
+                throw new InvalidOperationException($"O Pagamento com ID {inscricao.PagamentoContaCorrenteId} já está associado a outra Inscrição.");
             }
 
             // Verifica se já existe uma inscrição com o mesmo TimeID e CategoriaID

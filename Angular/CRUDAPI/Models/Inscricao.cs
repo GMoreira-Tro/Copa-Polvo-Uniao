@@ -27,9 +27,9 @@ namespace CRUDAPI.Models
         /// Time a ser inscrito.
         /// </summary>
         public virtual Time? Time { get; set; }
-        [ForeignKey("Pagamentos")]
-        public long PagamentoId { get; set; }
-        public virtual Pagamento? Pagamento { get; set; }
+        [ForeignKey("PagamentoContasCorrente")]
+        public long PagamentoContaCorrenteId { get; set; }
+        public virtual PagamentoContaCorrente? PagamentoContaCorrente { get; set; }
 
         /// <summary>
         /// Número da Posição após o término da participação da Inscrição. 
