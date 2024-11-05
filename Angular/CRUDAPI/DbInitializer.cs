@@ -292,7 +292,10 @@ namespace CRUDAPI {
                 var contaCorrente = context.ContasCorrentes
                     .FirstOrDefault(cc => cc.UsuarioId == time.UsuarioId);
                 var pagamentoContaCorrente = context.PagamentoContaCorrentes.FirstOrDefault(pcc => contaCorrente != null && 
-                                                                                                pcc.ContaCorrenteId == contaCorrente.Id);
+                                                                                                pcc.ContaCorrenteId == contaCorrente.Id
+                                                                                                && pcc.ContaCorrenteSolicitante);
+                if(pagamentoContaCorrente == null)
+                    continue;
                 var inscricao = new Inscricao
                 {
                     CategoriaId = primeiraCategoria.Id,       // Categoria escolhida

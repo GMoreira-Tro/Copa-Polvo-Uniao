@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRUDAPI.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20241105174011_InitialCreate")]
+    [Migration("20241105182817_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
