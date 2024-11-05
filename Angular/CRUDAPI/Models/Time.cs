@@ -23,6 +23,9 @@ namespace CRUDAPI.Models
         [Required]
         public string Nome { get; set; } = "";
         public string Municipio { get; set; } = "";
+        [ForeignKey("Usuarios")]
+        public long UsuarioId { get; set; }
+        public virtual Usuario? Usuario { get; set; }
         public List<Atleta>? Atletas { get; set; }
     }
 }

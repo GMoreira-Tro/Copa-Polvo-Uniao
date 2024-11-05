@@ -38,4 +38,66 @@ public static partial class Validators
         CPFCNPJ.Main main = new();
         return main.IsValidCPFCNPJ(documento);
     }
+
+    public static string GerarCpfValido()
+    {
+        Random random = new Random();
+        int[] cpf = new int[9];
+
+        // Gera os 9 primeiros dígitos
+        for (int i = 0; i < 9; i++)
+        {
+            cpf[i] = random.Next(0, 10);
+        }
+
+        // Calcula o primeiro dígito verificador
+        int primeiroDigito = CalcularDigitoVerificador(cpf, 10);
+        cpf = cpf.Append(primeiroDigito).ToArray();
+
+        // Calcula o segundo dígito verificador
+        int segundoDigito = CalcularDigitoVerificador(cpf, 11);
+        cpf = cpf.Append(segundoDigito).ToArray();
+
+        // Retorna o CPF como string formatada
+        return string.Join("", cpf);
+    }
+
+    private static int CalcularDigitoVerificador(int[] cpf, int peso)
+    {
+        int soma = 0;
+        for (int i = 0; i < cpf.Length; i++)
+        {
+            soma += cpf[i] * peso;
+            peso--;
+        }
+        int resto = soma % 11;
+        return resto < 2 ? 0 : 11 - resto;
+    }
+
+    public static string GerarSenhaValida()
+    {
+        const string letrasMaiusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const string letrasMinusculas = "abcdefghijklmnopqrstuvwxyz";
+        const string numeros = "0123456789";
+        const string simbolos = "!@#$%^&*()-_=+[]{};:,.<>?";
+
+        var random = new Random();
+        var senha = new List<char>
+        {
+            letrasMaiusculas[random.Next(letrasMaiusculas.Length)],
+            letrasMinusculas[random.Next(letrasMinusculas.Length)],
+            numeros[random.Next(numeros.Length)],
+            simbolos[random.Next(simbolos.Length)]
+        };
+
+        // Preencher o restante da senha até 8 caracteres
+        for (int i = senha.Count; i < 8; i++)
+        {
+            senha.Add(letrasMaiusculas[random.Next(letrasMaiusculas.Length)]);
+        }
+
+        // Embaralhar a senha
+        return new string(senha.OrderBy(c => random.Next()).ToArray());
+    }
+
 }

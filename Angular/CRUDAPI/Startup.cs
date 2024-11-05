@@ -47,6 +47,13 @@ namespace CRUDAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<Contexto>();
+
+                // Inicializa o banco com dados de exemplo
+                DbInitializer.InicializarBancoDados(context);
+            }
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
