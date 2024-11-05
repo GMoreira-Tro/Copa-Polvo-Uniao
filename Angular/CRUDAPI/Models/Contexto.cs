@@ -64,6 +64,11 @@ namespace CRUDAPI.Models
                     entity.Property(c => c.Saldo)
                         .HasPrecision(18, 2); // 18 dígitos no total, 2 casas decimais
                 });
+            modelBuilder.Entity<Inscricao>()
+                .HasOne(i => i.Time)
+                .WithMany(t => t.Inscricoes)
+                .HasForeignKey(i => i.TimeId)
+                .OnDelete(DeleteBehavior.Restrict); // ou .OnDelete(DeleteBehavior.NoAction);
         }
 
         // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

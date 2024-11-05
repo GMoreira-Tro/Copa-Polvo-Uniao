@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRUDAPI.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20241031181506_InitialCreate")]
+    [Migration("20241105174011_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -160,7 +160,7 @@ namespace CRUDAPI.Migrations
                     b.Property<long>("CategoriaId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("PagamentoId")
+                    b.Property<long>("PagamentoContaCorrenteId")
                         .HasColumnType("bigint");
 
                     b.Property<int?>("Posição")
@@ -179,7 +179,7 @@ namespace CRUDAPI.Migrations
 
                     b.HasIndex("CategoriaId");
 
-                    b.HasIndex("PagamentoId");
+                    b.HasIndex("PagamentoContaCorrenteId");
 
                     b.HasIndex("PremioResgatavelId");
 
@@ -369,7 +369,12 @@ namespace CRUDAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long>("UsuarioId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Times");
                 });
@@ -507,9 +512,9 @@ namespace CRUDAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CRUDAPI.Models.Pagamento", "Pagamento")
+                    b.HasOne("CRUDAPI.Models.PagamentoContaCorrente", "PagamentoContaCorrente")
                         .WithMany()
-                        .HasForeignKey("PagamentoId")
+                        .HasForeignKey("PagamentoContaCorrenteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -518,14 +523,14 @@ namespace CRUDAPI.Migrations
                         .HasForeignKey("PremioResgatavelId");
 
                     b.HasOne("CRUDAPI.Models.Time", "Time")
-                        .WithMany()
+                        .WithMany("Inscricoes")
                         .HasForeignKey("TimeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Categoria");
 
-                    b.Navigation("Pagamento");
+                    b.Navigation("PagamentoContaCorrente");
 
                     b.Navigation("PremioResgatavel");
 
@@ -588,6 +593,17 @@ namespace CRUDAPI.Migrations
                     b.Navigation("Pagamento");
                 });
 
+            modelBuilder.Entity("CRUDAPI.Models.Time", b =>
+                {
+                    b.HasOne("CRUDAPI.Models.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
+                });
+
             modelBuilder.Entity("CRUDAPI.Models.UsuarioNotificacao", b =>
                 {
                     b.HasOne("CRUDAPI.Models.Notificacao", "Notificacao")
@@ -645,6 +661,8 @@ namespace CRUDAPI.Migrations
             modelBuilder.Entity("CRUDAPI.Models.Time", b =>
                 {
                     b.Navigation("Atletas");
+
+                    b.Navigation("Inscricoes");
                 });
 
             modelBuilder.Entity("CRUDAPI.Models.Usuario", b =>

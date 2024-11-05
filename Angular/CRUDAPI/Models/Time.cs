@@ -27,5 +27,6 @@ namespace CRUDAPI.Models
         public long UsuarioId { get; set; }
         public virtual Usuario? Usuario { get; set; }
         public List<Atleta>? Atletas { get; set; }
+        public ICollection<Inscricao> Inscricoes { get; set; } = new List<Inscricao>();
     }
 }
