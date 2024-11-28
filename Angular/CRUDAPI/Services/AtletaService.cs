@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CRUDAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CRUDAPI.Services
 {
@@ -24,6 +25,23 @@ namespace CRUDAPI.Services
             if (!Validators.ValidarCPF(atleta.Cpf))
             {
                 throw new Exception("O CPF do atleta é inválido.");
+            }
+            if(!Validators.ValidarRG(atleta.Rg))
+            {
+                throw new Exception("O RG do atleta é inválido.");
+            }
+            // Verifica se o CPF já está cadastrado
+            var atletaComMesmoCpf = await _contexto.Atletas.FirstAsync(a => a.Cpf == atleta.Cpf);
+            if (atletaComMesmoCpf != null)
+            {
+                throw new Exception("Já existe um atleta cadastrado com este CPF.");
+            }
+
+            // Verifica se o RG já está cadastrado
+            var atletaComMesmoRg = await _contexto.Atletas.FirstAsync(a => a.Rg == atleta.Rg);
+            if (atletaComMesmoRg != null)
+            {
+                throw new Exception("Já existe um atleta cadastrado com este RG.");
             }
 
             return atleta;

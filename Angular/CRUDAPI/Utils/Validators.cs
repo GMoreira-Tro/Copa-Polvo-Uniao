@@ -30,6 +30,16 @@ public static partial class Validators
         return true;
     }
 
+    public static bool ValidarRG(string rg)
+    {
+        // Verifica se contém apenas números
+        if (!rg.All(char.IsDigit))
+            return false;
+
+        // O RG deve ter exatamente 9 dígitos
+        return rg.Length == 9;
+    }
+
     [GeneratedRegex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%&*!?\-_()])[A-Za-z\d@#$%&*!?\-_()]+$")]
     private static partial Regex SenhaRegex();
 
