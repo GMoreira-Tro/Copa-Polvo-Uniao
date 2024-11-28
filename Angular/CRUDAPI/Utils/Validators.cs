@@ -1,4 +1,6 @@
 using System.Text.RegularExpressions;
+using System.Security.Cryptography;
+using System.Text;
 
 public static partial class Validators
 {
@@ -110,4 +112,17 @@ public static partial class Validators
         return new string(senha.OrderBy(c => random.Next()).ToArray());
     }
 
+    public static string GerarTokenUnico(string email)
+    {
+        using (var sha256 = SHA256.Create())
+        {
+            // Combina o e-mail com a data/hora atual para gerar um hash único
+            string data = email + DateTime.UtcNow.Ticks;
+            byte[] hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(data));
+            return Convert.ToBase64String(hashBytes)
+                        .Replace("+", "") // Remove caracteres problemáticos em URLs
+                        .Replace("/", "")
+                        .Replace("=", "");
+        }
+    }
 }

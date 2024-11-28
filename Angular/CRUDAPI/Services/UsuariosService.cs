@@ -52,14 +52,6 @@ namespace CRUDAPI.Services
                 throw new EmailJaCadastradoException(); // Indica que o e-mail já está cadastrado
             }
 
-            if (Validators.ValidarSenha(usuario.SenhaHash))
-            {
-                string salt = BCrypt.Net.BCrypt.GenerateSalt(12);
-
-                // Hash da senha com o salt
-                usuario.SenhaHash = BCrypt.Net.BCrypt.HashPassword(usuario.SenhaHash, salt);
-            }
-
             // Verifica se o CPF/CNPJ já está cadastrado
             var cpfExistente = await _contexto.Usuarios.AnyAsync(u => u.Cpf == usuario.Cpf);
             if (cpfExistente)

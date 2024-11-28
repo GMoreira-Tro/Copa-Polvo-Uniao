@@ -26,7 +26,8 @@ namespace CRUDAPI.Models
         /// <summary>
         /// Indica se o usuário confirmou seu cadastro.
         /// </summary>
-        public bool EmailConfirmado {get; set; } = false;
+        public bool EmailConfirmado { get; set; } = false;
+        public string TokenEmail { get; set; } = "";
 
         /// <summary>
         /// Senha salva após encriptação.

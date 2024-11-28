@@ -50,11 +50,21 @@ namespace CRUDAPI.Controller
         {
             try
             {
+                if (Validators.ValidarSenha(usuario.SenhaHash))
+                {
+                    string salt = BCrypt.Net.BCrypt.GenerateSalt(12);
+
+                    // Hash da senha com o salt
+                    usuario.SenhaHash = BCrypt.Net.BCrypt.HashPassword(usuario.SenhaHash, salt);
+                }
                 usuario = await _usuarioService.ValidarUsuario(usuario);
+                usuario.EmailConfirmado = false;
+                usuario.TokenEmail = Validators.GerarTokenUnico(usuario.Email);
 
                 // Se todas as validações passaram, salva o usuário no banco de dados
                 _contexto.Usuarios.Add(usuario);
                 await _contexto.SaveChangesAsync();
+                await EnviarEmailConfirmacao(usuario.Email, usuario.TokenEmail);
 
                 return CreatedAtAction(nameof(GetUsuario), new { id = usuario.Id }, usuario);
             }
@@ -66,20 +76,39 @@ namespace CRUDAPI.Controller
 
         // Método para enviar e-mail de confirmação
         [HttpPost("email-confirmation")]
-        public async Task<IActionResult> EnviarEmailConfirmacao(string email)
+        public async Task<IActionResult> EnviarEmailConfirmacao(string email, string token)
         {
-            using (var client = new SmtpClient("smtp.webmail.com", 587))
+            using (var client = new SmtpClient("live.smtp.mailtrap.io", 587))
             {
                 client.EnableSsl = true;
                 client.UseDefaultCredentials = false;
-                client.Credentials = new System.Net.NetworkCredential("guilherme.moreira@rodwin.com.br", "Gm$1403s");
+                client.Credentials = new System.Net.NetworkCredential("api", "155e34e621d4d4a1b25bb7058e911616");
 
-                var message = new MailMessage();
-                message.From = new MailAddress("guilherme.moreira@rodwin.com.br");
+                // Configuração do e-mail
+                var message = new MailMessage
+                {
+                    From = new MailAddress("suporte@seusite.com", "Equipe de Suporte"),
+                    Subject = "Confirmação de Cadastro",
+                    IsBodyHtml = true // Suporte a HTML para mensagens ricas
+                };
+
+                // Corpo do e-mail (HTML)
+                string confirmationLink = "https://www.seusite.com/confirmacao?token={token}";
+                message.Body = $@"
+                    <html>
+                        <body>
+                            <p>Olá,</p>
+                            <p>Obrigado por se cadastrar em nossa plataforma! Por favor, confirme seu cadastro clicando no link abaixo:</p>
+                            <p><a href='{confirmationLink}'>Confirmar Cadastro</a></p>
+                            <p>Se você não realizou esse cadastro, ignore este e-mail.</p>
+                            <p>Atenciosamente,<br>Equipe de Suporte</p>
+                        </body>
+                    </html>";
+
+                // Destinatário
                 message.To.Add(email);
-                message.Subject = "Confirmação de Cadastro";
-                message.Body = "Olá, obrigado por se cadastrar! Por favor, confirme seu e-mail para ativar sua conta.";
 
+                // Envio do e-mail
                 await client.SendMailAsync(message);
             }
 
