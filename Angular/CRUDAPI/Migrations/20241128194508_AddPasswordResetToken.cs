@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CRUDAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class AddPasswordResetToken : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,6 +50,7 @@ namespace CRUDAPI.Migrations
                     Sobrenome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EmailConfirmado = table.Column<bool>(type: "bit", nullable: false),
+                    TokenEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SenhaHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DataNascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Cpf = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -237,6 +238,8 @@ namespace CRUDAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Cpf = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Rg = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DataNascimento = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TimeId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>

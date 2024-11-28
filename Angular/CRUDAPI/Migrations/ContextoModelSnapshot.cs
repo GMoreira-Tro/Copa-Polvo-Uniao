@@ -34,7 +34,15 @@ namespace CRUDAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DataNascimento")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rg")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -410,6 +418,10 @@ namespace CRUDAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sobrenome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TokenEmail")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

@@ -87,13 +87,14 @@ namespace CRUDAPI.Controller
                 // Configuração do e-mail
                 var message = new MailMessage
                 {
-                    From = new MailAddress("suporte@seusite.com", "Equipe de Suporte"),
+                    From = new MailAddress("hello@demomailtrap.com", "Equipe de Suporte"),
                     Subject = "Confirmação de Cadastro",
                     IsBodyHtml = true // Suporte a HTML para mensagens ricas
                 };
 
                 // Corpo do e-mail (HTML)
-                string confirmationLink = $"https://www.seusite.com/confirmacao?token={token}";
+                // string confirmationLink = $"https://www.seusite.com/confirmacao?token={token}";
+                string confirmationLink = $"https://www.google.com";
                 message.Body = $@"
                     <html>
                         <body>
@@ -130,7 +131,7 @@ namespace CRUDAPI.Controller
                 // Configuração do e-mail
                 var message = new MailMessage
                 {
-                    From = new MailAddress("suporte@seusite.com", "Equipe de Suporte"),
+                    From = new MailAddress("hello@demomailtrap.com", "Equipe de Suporte"),
                     Subject = "Redefinição de Senha",
                     IsBodyHtml = true
                 };
