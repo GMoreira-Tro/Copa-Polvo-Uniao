@@ -93,7 +93,7 @@ namespace CRUDAPI.Controller
                 };
 
                 // Corpo do e-mail (HTML)
-                string confirmationLink = "https://www.seusite.com/confirmacao?token={token}";
+                string confirmationLink = $"https://www.seusite.com/confirmacao?token={token}";
                 message.Body = $@"
                     <html>
                         <body>
@@ -114,6 +114,50 @@ namespace CRUDAPI.Controller
 
             return Ok();
         }
+
+        [HttpPost("password-reset")]
+        public async Task<IActionResult> EnviarEmailRedefinicaoSenha(string email, string token)
+        {
+            // Cria o link de redefinição de senha
+            string resetLink = $"https://www.seusite.com/redefinir-senha?token={token}";
+
+            using (var client = new SmtpClient("live.smtp.mailtrap.io", 587))
+            {
+                client.EnableSsl = true;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new System.Net.NetworkCredential("api", "155e34e621d4d4a1b25bb7058e911616");
+
+                // Configuração do e-mail
+                var message = new MailMessage
+                {
+                    From = new MailAddress("suporte@seusite.com", "Equipe de Suporte"),
+                    Subject = "Redefinição de Senha",
+                    IsBodyHtml = true
+                };
+
+                // Corpo do e-mail com o token no link de redefinição de senha
+                message.Body = $@"
+                    <html>
+                        <body>
+                            <p>Olá,</p>
+                            <p>Recebemos uma solicitação para redefinir sua senha. Se você não fez essa solicitação, ignore este e-mail.</p>
+                            <p>Se você deseja redefinir sua senha, clique no link abaixo:</p>
+                            <p><a href='{resetLink}'>Redefinir Senha</a></p>
+                            <p>Esse link expirará em 30 minutos.</p>
+                            <p>Atenciosamente,<br>Equipe de Suporte</p>
+                        </body>
+                    </html>";
+
+                // Destinatário
+                message.To.Add(email);
+
+                // Envio do e-mail
+                await client.SendMailAsync(message);
+            }
+
+            return Ok(new { message = "E-mail de redefinição de senha enviado!", token });
+        }
+
 
         // PUT: api/Usuario/5
         [HttpPut("{id}")]
